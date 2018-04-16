@@ -1,0 +1,53 @@
+## expResults
+
+
+# Question 1
+numberOfClients = 10000 -> SocketException
+numberOfClients = 10,100,1000 -> Ok
+The performance generally decreases as the thread count increases. We found the optimal thread count to be very low actually, about 2 or 4 depending on the processor.
+
+
+# Question 3
+Fixing client side nthreads at 100,
+Server: 10 threads
+- avg time to complete: 89ms
+Server: 1 thread
+- avg time to complete: 72ms
+Server: 100 threads
+- avg time to complete: 84ms
+Server: 50 threads
+- avg time to complete: 79ms
+
+The testing seems inconclusive due to the high variance and low overall computation time. This makes it hard to determine the optimal number of threads. One way to fix this is to increase the mean computation time such that the ratio of the variance to the mean is lower. This makes it easier to spot which thread pool size is actually optimal. For example, if mean computation time was 10000ms, then a variance of +-100ms would help to distinguish from another thread pool size that had a computation time of 20000ms +- 100ms.
+
+
+# Question 7
+number of threads: 32   
+Lock Counter Test: Total Time: 11.711586ms
+Atomic Integer Test: Total Time: 10.284625ms
+
+number of threads: 42   
+Lock Counter Test: Total Time: 15.388815ms
+Atomic Integer Test: Total Time: 11.928079ms
+
+number of threads: 52   
+Lock Counter Test: Total Time: 0.739554ms
+Atomic Integer Test: Total Time: 2.231305ms
+
+number of threads: 62   
+Lock Counter Test: Total Time: 0.937480ms
+Atomic Integer Test: Total Time: 2.494416ms
+
+number of threads: 72   
+Lock Counter Test: Total Time: 2.858662ms
+Atomic Integer Test: Total Time: 2.858662ms
+
+number of threads: 82   
+Lock Counter Test: Total Time: 3.87402ms
+Atomic Integer Test: Total Time: 3.234365ms
+
+number of threads: 92   
+Lock Counter Test: Total Time: 2.811254ms
+Atomic Integer Test: Total Time: 3.639698ms
+
+The optimal number seems to be between 52 and 62. After n=62, it seems that the overhead of setting up threads overweighs the time saved by using more threads.
